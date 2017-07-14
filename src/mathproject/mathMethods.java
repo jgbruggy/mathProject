@@ -40,7 +40,10 @@ private double D[];
         {
             S[i]=P1[i]-P2[i];
         }
-        double[] check = crossProduct(S,V);
+
+
+        Vector3D vector = new Vector3D(V);
+        double[] check = vector.crossProduct(new Vector3D(S)).toArray();
         System.out.println(check);
         if(check[0]==check[1] && check[1]==check[2] && check[2] == 0)
             return true;
@@ -60,8 +63,10 @@ private double D[];
         {
             S[i]=P1[i]-P2[i];
         }
-        
-        double[] normalVector = crossProduct(S,V);
+
+        Vector3D vector = new Vector3D(V);
+        double[] normalVector = vector.crossProduct(new Vector3D(S)).toArray();
+
         //Cross product
         //crossProduct(V,S);
         System.out.println("------"+normalVector[0]+" "+normalVector[1]+" "+normalVector[2]);
@@ -168,20 +173,6 @@ private double D[];
         
         
         return (a[0]*b[0])+(a[1]*b[1])+(a[2]*b[2]);
-    }
-    
-    /**
-     *
-     * @param a
-     * @param b
-     * @return
-     */
-    public static double[] crossProduct(double[] V, double[] S)
-    {
-
-        Vector3D k = new Vector3D();
-      return Vector3D.crossProduct();
-
     }
     
     public static double absoluteValue(double[] a)
