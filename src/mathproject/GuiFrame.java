@@ -93,6 +93,7 @@ private JPanel mainPanel;
             result+="Point: ("+enterPoint1Field.getText()+")\nLine: ("+enterPoint2Field.getText()+")+("+enterDirVectorField.getText()+")t\n\n";
             String question1; 
             String question2;
+            String question4;
             boolean onLine= mathMethods.onLine(pointArray, lineArray, dirVectorArray);
             
             System.out.println(onLine);
@@ -100,11 +101,14 @@ private JPanel mainPanel;
             {
                 question1="The Point is on the Line";
                 question2="Cannot find plane";
+                question4="Cannot reflect point, point is on the line.";
+
             }
             else
             {
                 question1="The Point is not on the Line";
                 question2 = mathMethods.planeEquation(pointArray, lineArray, dirVectorArray);
+                question4 = mathMethods.reflection(pointArray, lineArray, dirVectorArray);
             }
             result+="1) "+question1+"\n\n";
             
@@ -114,7 +118,7 @@ private JPanel mainPanel;
             
             result+="3) The equation of the plane that passes through P perpendicular to l: \nPlane:"+question3+"\n\n";
             
-            String question4 = mathMethods.reflection(pointArray, lineArray, dirVectorArray);
+
             
             result+="4) "+question4;
             

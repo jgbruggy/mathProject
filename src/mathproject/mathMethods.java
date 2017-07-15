@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 package mathproject;
-
 import org.apache.commons.math3.geometry.euclidean.threed.*;
+
 
 /**
  *
@@ -44,7 +44,7 @@ private double D[];
 
         Vector3D vector = new Vector3D(V);
         double[] check = vector.crossProduct(new Vector3D(S)).toArray();
-        System.out.println(check);
+        //System.out.println(check);
         if(check[0]==check[1] && check[1]==check[2] && check[2] == 0)
             return true;
         else
@@ -81,50 +81,45 @@ private double D[];
     towards our point P. To find the mirrored point, P’, we multiplied the orthogonal 
     vector by -2, and added that vector to point P to finally get P’.
     */
-    public static String reflection(double[] P1, double[] P2, double V[])
+    public static String reflection(double[] P1, double[] P2, double lineVector[])
     {
         String result="";
-        double[] S = new double[3];
-        //vector from P2 to P1 will be called S
+
+        double[] p2p1 = new double[3];
+        //vector from P2 to P1 will be called x
         for(int i=0;i<3;i++)
         {
-            S[i]=P1[i]-P2[i];
+            p2p1[i]=P1[i]-P2[i];
         }
+        Vector3D x = new Vector3D(p2p1[0], p2p1[1], p2p1[2]);
+        Vector3D directionVector = new Vector3D(lineVector);
 
-        //Calc comp and proj of S on direction vector V
-        double[] reflection = new double[3];
-        double absOfV = absoluteValue(V);
-        double absOfS = absoluteValue(S);
-        
-        boolean onLine = onLine(P1,P2,V);
-        
-        if(onLine==true)
-            return "The point is on the line!";
-        else 
-        {
-            //When the angle between S and V is greater than 0 and less than 90
-            
-            //double[] projSonV = new double[3];
-            
-            double[] projSonV = new double[3];
-            for(int i=0;i<3;i++)
-            {
-                projSonV[i]=(dotProduct(S,V)/(absOfV*absOfV))*(V[i]);
-            }
-            
-            
-            for(int i=0;i<3;i++)
-            {
-                reflection[i]=P1[i]-2*(S[i]-projSonV[i]);
 
-            }
+        double prj = Math.sqrt(directionVector.dotProduct(directionVector));
+
+
+        //find the projection of x onto the Line
+        double projxlScalar = x.dotProduct(directionVector)/(prj*prj);
+
+
+        //find the vector to P1
+
+
+        //x-Projection onto line gives the vector to p1
+        Vector3D othogonalVector = new Vector3D(x.subtract(directionVector.scalarMultiply(projxlScalar)).toArray());
+
+
+        //calculates the P', the reflection
+        Vector3D reflection = new Vector3D(P1);
+        reflection = reflection.add(-2,othogonalVector);
+
+        //return the reflected point
+        return "reflection is: " + reflection;
+
             
-            result = "The symmetric point to ("+P1[0]+", "+P1[1]+", "+P1[2]+") is ("+String.format( "%.2f", reflection[0] )+", "+
-                        String.format( "%.2f", reflection[1] )+", "+String.format( "%.2f", reflection[2] )+")";
-            return result;
-            
-        }
     }
+
+
     
     public static String planeToString(double[] vector, double[] point)
     {
@@ -165,18 +160,5 @@ private double D[];
         
         return equation;
     }
-    
-    public static double dotProduct(double[] a, double[] b)
-    {
-        System.out.println("PR: "+a[0]+" "+a[1]+" "+a[2]);
-        System.out.println("q: "+b[0]+" "+b[1]+" "+b[2]);
-        
-        
-        return (a[0]*b[0])+(a[1]*b[1])+(a[2]*b[2]);
-    }
-    
-    public static double absoluteValue(double[] a)
-    {
-        return Math.sqrt( Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) );
-    }
+
 }
