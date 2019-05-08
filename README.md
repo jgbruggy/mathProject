@@ -1,0 +1,1 @@
+This small project will show a small GUI made with java.swing that takes in a line and a point in 3D space and outputs where the point is reflected with respect to the line.
